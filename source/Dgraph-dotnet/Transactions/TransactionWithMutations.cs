@@ -2,23 +2,28 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DgraphDotNet;
 
-namespace DgraphDotNet.Transactions {
+namespace DgraphDotNet.Transactions
+{
 
-    internal class TransactionWithMutations : Transaction, ITransactionWithMutations {
+    internal class TransactionWithMutations : Transaction, ITransactionWithMutations
+    {
 
-        internal TransactionWithMutations(DgraphMutationsClient client) : base(client) {
+        internal TransactionWithMutations(DgraphMutationsClient client) : base(client)
+        {
 
         }
 
-        public IMutation NewMutation() {
+        public IMutation NewMutation()
+        {
             AssertNotDisposed();
 
-            return new Mutation();
+            return new Mutation(this);
         }
 
-        public async Task<FluentResults.Result<IDictionary<string, string>>> ApiMutate(Api.Mutation mutation) {
+        public async Task<FluentResults.Result<IDictionary<string, string>>> ApiMutate(Api.Mutation mutation)
+        {
             AssertNotDisposed();
-            
+
             return await base.Mutate(mutation);
         }
 
